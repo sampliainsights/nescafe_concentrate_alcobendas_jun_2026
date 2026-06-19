@@ -291,6 +291,66 @@
       letter-spacing: .04em
     }
 
+    /* sidebar activity/product table */
+    .sidebar-acttable {
+      margin: 14px 14px 0;
+      border: 1px solid var(--border-md);
+      border-radius: var(--r-md);
+      padding: 12px 14px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, .06)
+    }
+
+    .sidebar-acttable-label {
+      font-size: 9.5px;
+      font-weight: 700;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      color: var(--brand);
+      margin-bottom: 8px
+    }
+
+    .act-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 11px
+    }
+
+    .act-table th,
+    .act-table td {
+      padding: 4px 0;
+      text-align: left;
+      color: var(--txt-2);
+      border-bottom: 1px solid var(--border)
+    }
+
+    .act-table th {
+      font-size: 8.5px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .06em;
+      color: var(--txt-3)
+    }
+
+    .act-table td.act-num,
+    .act-table th.act-num {
+      text-align: right;
+      font-variant-numeric: tabular-nums;
+      font-weight: 600;
+      color: var(--txt-1)
+    }
+
+    .act-table tr:last-child td {
+      border-bottom: none
+    }
+
+    .act-table tr.act-total td {
+      font-weight: 800;
+      color: var(--brand);
+      border-bottom: 2px solid var(--border-md);
+      text-transform: uppercase;
+      letter-spacing: .03em
+    }
+
     .sidebar-nav {
       padding: 14px 12px;
       flex: 1
@@ -534,6 +594,45 @@
       }
     }
 
+    /* NPS "Recomendación" mini card — discrete animated background */
+    .nps-card {
+      position: relative;
+      overflow: hidden;
+      isolation: isolate;
+    }
+
+    .nps-card::before {
+      content: "";
+      position: absolute;
+      inset: -50%;
+      z-index: -1;
+      background:
+        radial-gradient(circle at 30% 20%, rgba(255, 255, 255, .14), transparent 45%),
+        radial-gradient(circle at 75% 80%, rgba(99, 132, 200, .22), transparent 50%);
+      animation: npsDrift 14s ease-in-out infinite alternate;
+    }
+
+    .nps-card > * {
+      position: relative;
+      z-index: 1;
+    }
+
+    @keyframes npsDrift {
+      0% {
+        transform: translate(-6%, -4%) scale(1);
+      }
+
+      100% {
+        transform: translate(6%, 4%) scale(1.12);
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .nps-card::before {
+        animation: none;
+      }
+    }
+
     /* PAGE CONTENT */
     .page-content {
       padding: 24px;
@@ -600,12 +699,7 @@
     }
 
     .kpi-card-accent {
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      height: 3px;
-      border-radius: var(--r-xl) var(--r-xl) 0 0
+      display: none
     }
 
     .kpi-icon {
@@ -1124,9 +1218,7 @@
     }
 
     .plb-n {
-      font-size: 10px;
-      color: var(--txt-3);
-      font-weight: 500
+      display: none
     }
 
     .plb-more-header {
@@ -1436,6 +1528,28 @@
       display: grid;
       grid-template-columns: repeat(6, 1fr);
       gap: 10px
+    }
+
+    /* MEDIA — unified gallery: photos + videos share one row, evenly distributed */
+    .media-grid {
+      display: grid;
+      grid-auto-flow: column;
+      grid-auto-columns: 1fr;
+      gap: 14px
+    }
+
+    @media(max-width:900px) {
+      .media-grid {
+        grid-auto-flow: row;
+        grid-auto-columns: auto;
+        grid-template-columns: repeat(2, 1fr)
+      }
+    }
+
+    @media(max-width:520px) {
+      .media-grid {
+        grid-template-columns: 1fr
+      }
     }
 
     .photo-thumb {
@@ -2483,6 +2597,29 @@
         </div>
       </div>
 
+      <div class="sidebar-acttable">
+        <div class="sidebar-acttable-label">Actividad / Producto</div>
+        <table class="act-table">
+          <thead>
+            <tr><th></th><th class="act-num">Total</th></tr>
+          </thead>
+          <tbody>
+            <tr class="act-total"><td>Degustaciones</td><td class="act-num">12.896</td></tr>
+            <tr><td>Black</td><td class="act-num">152</td></tr>
+            <tr><td>Vainilla</td><td class="act-num">199</td></tr>
+            <tr><td>Matcha</td><td class="act-num">43</td></tr>
+            <tr><td>Cereza</td><td class="act-num">23</td></tr>
+            <tr><td>Tónica</td><td class="act-num">32</td></tr>
+            <tr><td>Agua</td><td class="act-num">104</td></tr>
+            <tr><td>Agua gas</td><td class="act-num">160</td></tr>
+            <tr><td>Agua gas lima</td><td class="act-num">301</td></tr>
+            <tr><td>Leche semi</td><td class="act-num">320</td></tr>
+            <tr><td>Leche sin lact.</td><td class="act-num">83</td></tr>
+            <tr><td>Avena</td><td class="act-num">211</td></tr>
+          </tbody>
+        </table>
+      </div>
+
       <nav class="sidebar-nav">
         <div class="sidebar-nav-section">Filtros activos</div>
         <div style="padding:0 8px;">
@@ -2531,6 +2668,10 @@
         <a class="nav-item" href="#insights" onclick="closeSidebarMobile()">
           <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
           Insights
+        </a>
+        <a class="nav-item" href="#media" onclick="closeSidebarMobile()">
+          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+          Material gráfico
         </a>
       </nav>
       <div class="sidebar-bottom"></div>
@@ -2704,9 +2845,20 @@
           <div class="insight-grid row-gap" id="insightsContainer"></div>
         </div>
 
-        
+        <!-- ══ MEDIA ══ -->
+        <div id="media" style="scroll-margin-top:72px;margin-top:36px;">
+          <div class="section-header">
+            <div class="section-accent"></div>
+            <div class="section-title">Fotos y Vídeo de la campaña</div>
+            <div class="section-line"></div>
+          </div>
 
-        <!-- LIGHTBOX (kept for compatibility, no photos in this campaign) -->
+          <div class="media-grid" id="mediaGrid"></div>
+
+          <div id="mediaEmpty" class="no-data" style="display:none;">Sin material gráfico disponible para esta campaña.</div>
+        </div>
+
+        <!-- LIGHTBOX (used by the media gallery above) -->
         <div class="lb-overlay" id="lbOverlay" onclick="closeLightboxOnBg(event)">
           <button class="lb-close" onclick="closeLightbox()" aria-label="Cerrar">✕</button>
           <button class="lb-nav lb-prev" onclick="lbNav(-1)" aria-label="Anterior">&#8249;</button>
@@ -2769,12 +2921,12 @@
     const QUESTIONS = [
       { col: 'WZsk5jtT37XD8oTAjAYb', title: 'Variedad probada', sub: '¿Qué variedad de Nescafé Espresso Concentrate has probado?', type: 'doughnut', multi: true, section: 'demograficos' },
       { col: 'HQROBKfGmqTlNCi8yKal', title: 'Conocimiento previo', sub: 'Antes de obtener la muestra, ¿conocías este producto que has probado con Samplia?', type: 'leaderboard_premium', blueGradient: true, section: 'respuestas', pairStart: true },
-      { col: 'q403aZtbTwLCiZniG0gJ', title: 'Momento de uso', sub: '¿En qué momento del día ves más probable utilizar Nescafé Espresso Concentrate?', type: 'waffle', blueGradient: true, section: 'respuestas', pairEnd: true },
+      { col: 'q403aZtbTwLCiZniG0gJ', title: 'Momento de uso', sub: '¿En qué momento del día ves más probable utilizar Nescafé Espresso Concentrate?', type: 'leaderboard_premium', blueGradient: true, section: 'respuestas', pairEnd: true },
       { col: 'A3wyd4AjjXFGSxT2yOL5', title: 'Valor del formato', sub: '¿Qué es lo que más valoras de este nuevo formato concentrado?', type: 'hbar', multi: true, redGradient: true, section: 'respuestas' },
       { col: 'wrUmI6tQELQA7qI9iPry', title: 'Impresión general', sub: 'Tras probar el producto, ¿cuál es tu impresión general?', type: 'score', benchmark: 7.5, section: 'respuestas', pairStart: true },
       { col: 'SFNDwhGORh59c0l06RpD', title: 'Facilidad de preparación', sub: 'Facilidad para prepararte un café frío en comparación con otros métodos', type: 'score', benchmark: 7.5, section: 'respuestas', pairEnd: true },
       { col: '6Iros49ldWmUtzhMrmjD', title: 'Próxima compra', sub: '¿Qué tan probable es que inclujas este producto en tu próxima compra?', type: 'stackedbar', vertical: true, fixedOrder: ['Sí, lo compraré', 'Aún no lo sé', 'No lo compraré'], colorMap: { 'Sí, lo compraré': '#0F1729', 'Aún no lo sé': '#D1D5DB', 'No lo compraré': '#B51A03' }, section: 'respuestas', pairStart: true, pairRatio: '1 1.5' },
-      { col: 'Zzm8pbt5Rmnx35dJQYxD', title: 'Motivo principal', sub: '¿Cuál es el motivo principal?', type: 'hbar', redGradient: true, section: 'respuestas', pairEnd: true },
+      { col: 'Zzm8pbt5Rmnx35dJQYxD', title: 'Motivo principal', sub: '¿Cuál es el motivo principal que te hace dudar o no comprar este producto?', type: 'hbar', redGradient: true, section: 'respuestas', pairEnd: true },
       { col: '5WwiASnZDRxV8basTNmr', title: 'Recomendación', sub: '¿Recomendarías a un amigo o familiar comprar este producto que has probado con Samplia?', type: 'nps', section: 'respuestas' },
     ];
 
@@ -2783,11 +2935,16 @@
 
     // ── HELPERS ──
     function redGradientShades(n) { const sR = 194, sG = 29, sB = 3, eR = 255, eG = 183, eB = 135; return Array.from({ length: n }, (_, i) => { const t = n > 1 ? i / (n - 1) : 0; return `rgb(${Math.round(sR + (eR - sR) * t)},${Math.round(sG + (eG - sG) * t)},${Math.round(sB + (eB - sB) * t)})`; }); }
+    let _corpShadeStops = null; // cache: brand CSS vars are static, avoid repeated style recalcs
     function corporateShades(n) {
-      const base = getComputedStyle(document.documentElement).getPropertyValue('--primary-100').trim() || '#E0253F';
-      const pale = getComputedStyle(document.documentElement).getPropertyValue('--primary-300').trim() || '#FBDBDF';
-      const hexToRgb = h => { const x = h.replace('#', '').trim(); const v = x.length === 3 ? x.split('').map(c => c + c).join('') : x; return [v.slice(0, 2), v.slice(2, 4), v.slice(4, 6)].map(s => parseInt(s, 16)); };
-      const [sR, sG, sB] = hexToRgb(base); const [eR, eG, eB] = hexToRgb(pale);
+      if (!_corpShadeStops) {
+        const cs = getComputedStyle(document.documentElement);
+        const base = cs.getPropertyValue('--primary-100').trim() || '#E0253F';
+        const pale = cs.getPropertyValue('--primary-300').trim() || '#FBDBDF';
+        const hexToRgb = h => { const x = h.replace('#', '').trim(); const v = x.length === 3 ? x.split('').map(c => c + c).join('') : x; return [v.slice(0, 2), v.slice(2, 4), v.slice(4, 6)].map(s => parseInt(s, 16)); };
+        _corpShadeStops = { start: hexToRgb(base), end: hexToRgb(pale) };
+      }
+      const [sR, sG, sB] = _corpShadeStops.start; const [eR, eG, eB] = _corpShadeStops.end;
       return Array.from({ length: n }, (_, i) => { const t = n > 1 ? i / (n - 1) : 0; return `rgb(${Math.round(sR + (eR - sR) * t)},${Math.round(sG + (eG - sG) * t)},${Math.round(sB + (eB - sB) * t)})`; });
     }
     function blueShades(n) { const sR = 15, sG = 23, sB = 41, eR = 135, eG = 180, eB = 240; return Array.from({ length: n }, (_, i) => { const t = n > 1 ? i / (n - 1) : 0; return `rgb(${Math.round(sR + (eR - sR) * t)},${Math.round(sG + (eG - sG) * t)},${Math.round(sB + (eB - sB) * t)})`; }); }
@@ -3132,7 +3289,7 @@
       `;
       const html = `
       <div style="display:flex;gap:20px;margin-bottom:20px;align-items:flex-start;">
-        <div style="background:linear-gradient(135deg,#375395,#0F1729);color:#fff;border-radius:12px;padding:16px;text-align:center;min-width:140px;box-shadow:var(--sh-sm);">
+        <div class="nps-card" style="background:linear-gradient(135deg,#375395,#0F1729);color:#fff;border-radius:12px;padding:16px;text-align:center;min-width:140px;box-shadow:var(--sh-sm);">
           <div style="font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:#9ca3af;margin-bottom:8px;">Recomendación</div>
           <div style="font-size:28px;font-weight:800;line-height:1;">${nps > 0 ? '+' : ''}${nps}</div>
           <div style="font-size:10px;color:#9ca3af;margin-top:4px;">NPS Index</div>
@@ -3296,6 +3453,7 @@
       QUESTIONS.forEach((q, i) => {
         const idx = getIdxAny(q.col, q.colFallback);
         const chartId = 'dynChart_' + i;
+        try {
         if (q.type === 'consumo_selector') {
           window.consumoChartData = window.consumoChartData || {};
           window.consumoChartData[chartId] = q.products.map(p => {
@@ -3430,7 +3588,8 @@
           }
 
           // Generar leyenda personalizada (mismo patrón que renderStackedVariety)
-          const cardInner = document.getElementById(chartId).closest('.card-inner');
+          const stackedEl = document.getElementById(chartId);
+          const cardInner = stackedEl ? stackedEl.closest('.card-inner') : null;
           if (cardInner) {
             const oldLeg = cardInner.querySelector('.sv-legend');
             if (oldLeg) oldLeg.remove();
@@ -3485,6 +3644,13 @@
           const el = document.getElementById(chartId); if (!el) return;
           if (!arr.length) { el.parentElement.innerHTML = '<div class="no-data">Sin datos disponibles</div>'; return; }
           renderHeatmap(el, rows, idx, arr, q);
+        }
+        } catch (err) {
+          // Isolate per-chart failures: one broken chart must not stop the rest,
+          // and must not be misreported as a data-loading error.
+          console.error('[Chart] "' + (q.title || q.col) + '" (' + q.type + ') failed:', err);
+          const el = document.getElementById(chartId);
+          if (el && el.parentElement) el.parentElement.innerHTML = '<div class="no-data">No se pudo mostrar este gráfico</div>';
         }
       });
     }
@@ -3664,14 +3830,20 @@
     
 
     // ── RENDER ──
+    // Each section is isolated so a failure in one does not blank the others,
+    // and so render-time errors are never misreported as data-loading errors.
+    function safeRender(name, fn) {
+      try { fn(); } catch (err) { console.error('[Render] ' + name + ' failed:', err); }
+    }
     function render(rows) {
-      renderKPIs(rows);
-      renderDemographics(rows);
-      renderDynamicCharts(rows);
-      renderInsights(rows);
+      safeRender('KPIs', () => renderKPIs(rows));
+      safeRender('Demographics', () => renderDemographics(rows));
+      safeRender('DynamicCharts', () => renderDynamicCharts(rows));
+      safeRender('Insights', () => renderInsights(rows));
 
       const n = rows.length;
-      document.getElementById('sidebarFilterCount').textContent = n < allRows.length ? `${n} de ${allRows.length} encuestados filtrados` : `${n} encuestados totales`;
+      const fc = document.getElementById('sidebarFilterCount');
+      if (fc) fc.textContent = n < allRows.length ? `${n} de ${allRows.length} encuestados filtrados` : `${n} encuestados totales`;
     }
 
     // ── DATA LOADING ──
@@ -3756,9 +3928,11 @@
 
     // ── EVENTS ──
     ['fGender', 'fAge', 'fVariety'].forEach(id => {
-      document.getElementById(id).addEventListener('change', () => render(getFiltered()));
+      const elFilter = document.getElementById(id);
+      if (elFilter) elFilter.addEventListener('change', () => render(getFiltered()));
     });
-    document.getElementById('lastUpdate').addEventListener('click', fetchData);
+    const elLastUpdate = document.getElementById('lastUpdate');
+    if (elLastUpdate) elLastUpdate.addEventListener('click', fetchData);
 
     // ── SIDEBAR MOBILE ──
     function toggleSidebar() { const sb = document.getElementById('sidebar'); const bk = document.getElementById('sidebarBackdrop'); sb.classList.toggle('open'); bk.classList.toggle('open'); }
@@ -3819,8 +3993,14 @@
     });
 
     // ── MEDIA (Google Drive photos + YouTube videos) ──
-    const MEDIA_PHOTOS = [];
-    const MEDIA_VIDEOS = [];
+    const MEDIA_PHOTOS = [
+      '1QJIHargvsfHE5LOcURuRSfsAqMpKHZlP',
+      '1v_CaG78ZEnlU8w-4_p4Tv_M_daX74zFZ',
+      '1zqr2qOTTJLGE9qUyhjlMQK9ZzWXZbpkT',
+    ];
+    const MEDIA_VIDEOS = [
+      { id: 'sxpJn5SKNQo', title: 'Sampling NESCAFÉ Espresso Concentrate · CC Carrefour Alcobendas' },
+    ];
 
     const driveThumb = (id, w) => `https://drive.google.com/thumbnail?id=${id}&sz=w${w}`;
 
@@ -3829,33 +4009,30 @@
     let lbIdx = 0;
 
     function buildMedia() {
-      const ph = document.getElementById('mediaPhotos');
-      if (ph) {
-        ph.innerHTML = MEDIA_PHOTOS.map((id, i) => `
-          <div class="photo-thumb" onclick="openLightbox(${i})">
-            <img src="${driveThumb(id, 1000)}" alt="Foto ${i + 1}" loading="lazy" referrerpolicy="no-referrer">
-            <div class="photo-zoom-icon">
-              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-                <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/>
-              </svg>
-            </div>
-          </div>`).join('');
-      }
-      const vid = document.getElementById('mediaVideos');
-      if (vid) {
-        vid.innerHTML = MEDIA_VIDEOS.map((v, i) => `
-          <div class="video-item">
-            <a class="video-thumb" href="https://youtu.be/${v.id}" target="_blank" rel="noopener" aria-label="${v.title}">
-              <img src="https://img.youtube.com/vi/${v.id}/hqdefault.jpg" alt="${v.title}" loading="lazy">
-              <div class="video-play-icon">
-                <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
-                  <path d="M8 5v14l11-7z"/>
-                </svg>
-              </div>
-            </a>
-            <div class="video-title">${v.title}</div>
-          </div>`).join('');
-      }
+      const grid = document.getElementById('mediaGrid');
+      const empty = document.getElementById('mediaEmpty');
+      const hasMedia = MEDIA_PHOTOS.length || MEDIA_VIDEOS.length;
+      if (empty) empty.style.display = hasMedia ? 'none' : '';
+      if (!grid) return;
+      const photosHTML = MEDIA_PHOTOS.map((id, i) => `
+        <div class="photo-thumb" onclick="openLightbox(${i})">
+          <img src="${driveThumb(id, 1000)}" alt="Foto ${i + 1}" loading="lazy" referrerpolicy="no-referrer">
+          <div class="photo-zoom-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/>
+            </svg>
+          </div>
+        </div>`).join('');
+      const videosHTML = MEDIA_VIDEOS.map((v) => `
+        <a class="video-thumb" href="https://youtu.be/${v.id}" target="_blank" rel="noopener" aria-label="${v.title}">
+          <img src="https://img.youtube.com/vi/${v.id}/hqdefault.jpg" alt="${v.title}" loading="lazy">
+          <div class="video-play-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M8 5v14l11-7z"/>
+            </svg>
+          </div>
+        </a>`).join('');
+      grid.innerHTML = photosHTML + videosHTML;
     }
 
     // ── LIGHTBOX ──
